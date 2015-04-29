@@ -1,6 +1,6 @@
 import datetime
 
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.db import models, IntegrityError
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
@@ -36,7 +36,7 @@ class MetricSet(models.Model):
     """ A set of metrics that should be sent via email to certain users """
     name = models.CharField(_('name'), max_length=50)
     metrics = models.ManyToManyField(Metric, verbose_name=_('metrics'))
-    email_recipients = models.ManyToManyField(get_user_model(), verbose_name=_('email recipients'))
+    email_recipients = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=_('email recipients'))
     no_email = models.BooleanField(_('no e-mail'), default=False)
     send_daily = models.BooleanField(_('send daily'), default=True)
     send_weekly = models.BooleanField(_('send weekly'), default=False)
